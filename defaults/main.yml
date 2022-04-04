@@ -1,2 +1,5 @@
 ---
 # defaults file for ansible-role-mcafee-agent
+
+software_url: "http://www.example.org"
+package_name: "mcafee-agent_5.7.4.417.sh"
