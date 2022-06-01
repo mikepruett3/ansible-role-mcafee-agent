@@ -1,0 +1,5 @@
+---
+# Debian vars file for ansible-role-mcafee-agent
+
+packages:
+  - unzip

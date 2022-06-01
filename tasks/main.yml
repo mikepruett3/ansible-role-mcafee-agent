@@ -1,10 +1,20 @@
 ---
 # tasks file for ansible-role-mcafee-agent
 
+- name: "Include OS-specific variables"
+  include_vars: "{{ ansible_os_family }}.yaml"
+
 - name: "Gather the package facts"
   ansible.builtin.package_facts:
     manager: auto
   when: ansible_facts.packages is not defined
+
+- name: "Install required packages"
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  when: item|string not in ansible_facts.packages
+  with_items: "{{ packages }}"
 
 - name: "Create software directory under root homedir, if it does not exist"
   ansible.builtin.file:
