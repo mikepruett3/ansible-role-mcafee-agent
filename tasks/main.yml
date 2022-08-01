@@ -20,7 +20,7 @@
   ansible.builtin.file:
     path: "/root/software/{{ package_name.split('_')[0] }}/"
     state: directory
-  
+
 - name: "Check if installer package already exist"
   ansible.builtin.stat:
     path: "/root/software/{{ package_name.split('_')[0] }}/{{ package_name }}"
@@ -31,7 +31,7 @@
     url: "{{ software_url }}/{{ package_name }}"
     dest: "/root/software/{{ package_name.split('_')[0] }}/"
     validate_certs: no
-    mode: 0777
+    mode: '0770'
   when: package.stat.exists != True
 
 - name: "Install package"
