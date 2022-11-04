@@ -18,18 +18,18 @@
 
 - name: "Create software directory under root homedir, if it does not exist"
   ansible.builtin.file:
-    path: "/root/software/{{ package_name.split('_')[0] }}/"
+    path: "/root/software/mcafee-agent/"
     state: directory
 
 - name: "Check if installer package already exist"
   ansible.builtin.stat:
-    path: "/root/software/{{ package_name.split('_')[0] }}/{{ package_name }}"
+    path: "/root/software/mcafee-agent/{{ package_name }}"
   register: package
 
 - name: "Download installer package from local repository"
   ansible.builtin.get_url:
     url: "{{ software_url }}/{{ package_name }}"
-    dest: "/root/software/{{ package_name.split('_')[0] }}/"
+    dest: "/root/software/mcafee-agent/"
     validate_certs: no
     mode: '0770'
   when: package.stat.exists != True
@@ -37,5 +37,5 @@
 - name: "Install package"
   ansible.builtin.command: "./{{ package_name }} -i"
   args:
-    chdir: "/root/software/{{ package_name.split('_')[0] }}/"
+    chdir: "/root/software/mcafee-agent/"
     creates: /etc/ma.d/ma_environment.conf
